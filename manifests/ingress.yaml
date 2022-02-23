@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fiber
+  namespace: demo
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-name: fiber
+    alb.ingress.kubernetes.io/subnets: subnet-0c4f4518b16be2eb9, subnet-08f7c3bac2a93a984
+    alb.ingress.kubernetes.io/security-groups: sg-0f5be780873b8902a
+spec:
+  ingressClassName: alb
+  rules:
+    - host: "fiber.oamsan.io"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: fiber
+              port:
+                number: 3000

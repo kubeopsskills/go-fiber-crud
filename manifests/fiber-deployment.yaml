@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fiber
+  name: fiber
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fiber
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: fiber
+    spec:
+      containers:
+      - image: dmakeroam/go-fiber-crud:1.0.0
+        name: go-fiber-crud
+        ports:
+          - name: http
+            containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: db-fiber
+        resources: {}
+status: {}
